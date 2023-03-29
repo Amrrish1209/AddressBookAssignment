@@ -7,7 +7,7 @@ public class Contact {
 	private String address;
 	private String city;
 	private String state;
-	private int zip;
+	private String zip;
 	private String phoneNumber;
 	private String email;
 
@@ -51,11 +51,11 @@ public class Contact {
 		this.state = state;
 	}
 
-	public int getZip() {
+	public String getZip() {
 		return zip;
 	}
 
-	public void setZip(int zip) {
+	public void setZip(String zip) {
 		this.zip = zip;
 	}
 
