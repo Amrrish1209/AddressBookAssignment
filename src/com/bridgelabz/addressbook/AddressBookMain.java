@@ -7,5 +7,7 @@ public class AddressBookMain {
 		System.out.println("Welcome To Address Book Program");
 		AddressBook addressbook = new AddressBook();
 		addressbook.addContact();
+		System.out.println();
+		addressbook.displayContact();
 	}
 }
