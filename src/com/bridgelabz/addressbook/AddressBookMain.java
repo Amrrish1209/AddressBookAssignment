@@ -13,7 +13,8 @@ public class AddressBookMain {
 			System.out.println("1. Add Contact");
 			System.out.println("2. Edit Contact");
 			System.out.println("3. Display All Contacts");
-			System.out.println("4. Exit");
+			System.out.println("4. Delete Contacts");
+			System.out.println("5. Exit");
 
 			System.out.print("Enter option: ");
 			int option = sc.nextInt();
@@ -29,7 +30,9 @@ public class AddressBookMain {
 				addressBook.displayContact();
 				break;
 			case 4:
-				
+				addressBook.deleteContact();
+				break;
+			case 5:
 				System.out.println("Exit");
 				System.exit(0);
 				break;
