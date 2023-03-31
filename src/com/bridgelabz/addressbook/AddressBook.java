@@ -9,26 +9,33 @@ public class AddressBook {
 	Scanner sc = new Scanner(System.in);
 
 	public void addContact() {
-		Contact contact = new Contact(); // create new Contact object
-		System.out.println("Enter the FirstName");
-		contact.setFirstName(sc.nextLine());
-		System.out.println("Enter the LastName");
-		contact.setLastName(sc.nextLine());
-		System.out.println("Enter the Address");
-		contact.setAddress(sc.nextLine());
-		System.out.println("Enter the CityName");
-		contact.setCity(sc.nextLine());
-		System.out.println("Enter the StateName");
-		contact.setState(sc.nextLine());
-		System.out.println("Enter the Zip");
-		contact.setZip(sc.nextLine());
-		System.out.println("Enter the PhoneNumber");
-		contact.setPhoneNumber(sc.nextLine());
-		System.out.println("Enter the EmailId");
-		contact.setEmail(sc.nextLine());
+		boolean addMoreContacts = true;
+		while (addMoreContacts) {
+			Contact contact = new Contact(); // create new Contact object
+			System.out.println("Enter the FirstName");
+			contact.setFirstName(sc.nextLine());
+			System.out.println("Enter the LastName");
+			contact.setLastName(sc.nextLine());
+			System.out.println("Enter the Address");
+			contact.setAddress(sc.nextLine());
+			System.out.println("Enter the CityName");
+			contact.setCity(sc.nextLine());
+			System.out.println("Enter the StateName");
+			contact.setState(sc.nextLine());
+			System.out.println("Enter the Zip");
+			contact.setZip(sc.nextLine());
+			System.out.println("Enter the PhoneNumber");
+			contact.setPhoneNumber(sc.nextLine());
+			System.out.println("Enter the EmailId");
+			contact.setEmail(sc.nextLine());
 
-		contacts.add(contact);
-		System.out.println("Contact Added Successfully");
+			contacts.add(contact);
+			System.out.println("Contact Added Successfully");
+
+			System.out.println("Do you want to add another contact? (Y/N)");
+			String choice = sc.nextLine();
+			addMoreContacts = choice.equalsIgnoreCase("Y");
+		}
 	}
 
 	public void displayContact() {
