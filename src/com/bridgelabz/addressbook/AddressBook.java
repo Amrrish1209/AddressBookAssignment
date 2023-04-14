@@ -13,9 +13,15 @@ public class AddressBook {
 		while (addMoreContacts) {
 			Contact contact = new Contact(); // create new Contact object
 			System.out.println("Enter the FirstName");
-			contact.setFirstName(sc.nextLine());
+			String firstName = sc.nextLine();
 			System.out.println("Enter the LastName");
-			contact.setLastName(sc.nextLine());
+			String lastName = sc.nextLine();
+			if (isContactExists(firstName, lastName)) {
+				System.out.println("Contact with same name already exists!");
+				continue;
+			}
+			contact.setFirstName(firstName);
+			contact.setLastName(lastName);
 			System.out.println("Enter the Address");
 			contact.setAddress(sc.nextLine());
 			System.out.println("Enter the CityName");
@@ -36,6 +42,16 @@ public class AddressBook {
 			String choice = sc.nextLine();
 			addMoreContacts = choice.equalsIgnoreCase("Y");
 		}
+	}
+
+	public boolean isContactExists(String firstName, String lastName) {
+		for (Contact contact : contacts) {
+			if (contact.getFirstName().equalsIgnoreCase(firstName)
+					&& contact.getLastName().equalsIgnoreCase(lastName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void displayContact() {
