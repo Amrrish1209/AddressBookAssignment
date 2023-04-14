@@ -46,8 +46,7 @@ public class AddressBook {
 
 	public boolean isContactExists(String firstName, String lastName) {
 		for (Contact contact : contacts) {
-			if (contact.getFirstName().equalsIgnoreCase(firstName)
-					&& contact.getLastName().equalsIgnoreCase(lastName)) {
+			if (contact.getFirstName().equals(firstName) && contact.getLastName().equals(lastName)) {
 				return true;
 			}
 		}

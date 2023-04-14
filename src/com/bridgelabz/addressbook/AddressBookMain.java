@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class AddressBookMain {
 
 	public static void main(String[] args) {
-		AddressBook addressBook = new AddressBook();
+		AddressBook addressBook=new AddressBook();
 		Scanner sc = new Scanner(System.in);
 
 		while (true) {
@@ -15,7 +15,6 @@ public class AddressBookMain {
 			System.out.println("3. Display All Contacts");
 			System.out.println("4. Delete Contacts");
 			System.out.println("5. Exit");
-
 			System.out.print("Enter option: ");
 			int option = sc.nextInt();
 
