@@ -84,7 +84,7 @@ public class AddressBook {
 		} else {
 			System.out.println("Contacts in the city of " + cityName + ":");
 			for (Contact contact : results) {
-				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName());
+				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName()+" "+ "Mobile Number: "+contact.getPhoneNumber());
 			}
 		}
 		return results;
@@ -103,7 +103,7 @@ public class AddressBook {
 		} else {
 			System.out.println("Contacts in the state of " + stateName + ":");
 			for (Contact contact : results) {
-				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName());
+				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName()+" "+"Mobile Number: "+contact.getPhoneNumber());
 			}
 		}
 		return results;
