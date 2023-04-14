@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class AddressBookMain {
 
 	public static void main(String[] args) {
-		AddressBook addressBook=new AddressBook();
+		AddressBook addressBook = new AddressBook();
 		Scanner sc = new Scanner(System.in);
 
 		while (true) {
@@ -14,7 +14,9 @@ public class AddressBookMain {
 			System.out.println("2. Edit Contact");
 			System.out.println("3. Display All Contacts");
 			System.out.println("4. Delete Contacts");
-			System.out.println("5. Exit");
+			System.out.println("5. Search by City");
+			System.out.println("6. Search by State");
+			System.out.println("7. Exit");
 			System.out.print("Enter option: ");
 			int option = sc.nextInt();
 
@@ -32,15 +34,23 @@ public class AddressBookMain {
 				addressBook.deleteContact();
 				break;
 			case 5:
-				System.out.println("Exit");
+				System.out.print("Enter city name: ");
+				String city = sc.next();
+				addressBook.searchByCity(city);
+				break;
+			case 6:
+				System.out.print("Enter state name: ");
+				String state = sc.next();
+				addressBook.searchByState(state);
+				break;
+			case 7:
+				System.out.println("Exiting...");
 				System.exit(0);
 				break;
-				
 			default:
 				System.out.println("Invalid option!");
 				break;
 			}
 		}
 	}
-
 }

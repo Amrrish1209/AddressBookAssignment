@@ -53,6 +53,34 @@ public class AddressBook {
 		return false;
 	}
 
+	public ArrayList<Contact> searchByCity(String cityName) {
+		ArrayList<Contact> results = new ArrayList<>();
+		for (int i = 0; i < contacts.size(); i++) {
+			Contact contact = contacts.get(i);
+			if (contact.getCity().equalsIgnoreCase(cityName)) {
+				results.add(contact);
+			}
+		}
+		if (results.isEmpty()) {
+			System.out.println("No contacts found in the given city.");
+		}
+		return results;
+	}
+
+	public ArrayList<Contact> searchByState(String stateName) {
+		ArrayList<Contact> results = new ArrayList<>();
+		for (int i = 0; i < contacts.size(); i++) {
+			Contact contact = contacts.get(i);
+			if (contact.getState().equalsIgnoreCase(stateName)) {
+				results.add(contact);
+			}
+		}
+		if (results.isEmpty()) {
+			System.out.println("No contacts found in the given state.");
+		}
+		return results;
+	}
+
 	public void displayContact() {
 		System.out.println("All Contacts");
 		for (int i = 0; i < contacts.size(); i++) {
