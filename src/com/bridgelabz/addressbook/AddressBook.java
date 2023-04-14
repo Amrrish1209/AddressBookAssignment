@@ -53,7 +53,25 @@ public class AddressBook {
 		return false;
 	}
 
-	public ArrayList<Contact> searchByCity(String cityName) {
+	/*
+	 * public ArrayList<Contact> searchByCity(String cityName) { ArrayList<Contact>
+	 * results = new ArrayList<>(); for (int i = 0; i < contacts.size(); i++) {
+	 * Contact contact = contacts.get(i); if
+	 * (contact.getCity().equalsIgnoreCase(cityName)) { results.add(contact); } } if
+	 * (results.isEmpty()) {
+	 * System.out.println("No contacts found in the given city."); } return results;
+	 * }
+	 * 
+	 * public ArrayList<Contact> searchByState(String stateName) {
+	 * ArrayList<Contact> results = new ArrayList<>(); for (int i = 0; i <
+	 * contacts.size(); i++) { Contact contact = contacts.get(i); if
+	 * (contact.getState().equalsIgnoreCase(stateName)) { results.add(contact); } }
+	 * if (results.isEmpty()) {
+	 * System.out.println("No contacts found in the given state."); } return
+	 * results; }
+	 */
+
+	public ArrayList<Contact> viewContactsByCity(String cityName) {
 		ArrayList<Contact> results = new ArrayList<>();
 		for (int i = 0; i < contacts.size(); i++) {
 			Contact contact = contacts.get(i);
@@ -63,11 +81,16 @@ public class AddressBook {
 		}
 		if (results.isEmpty()) {
 			System.out.println("No contacts found in the given city.");
+		} else {
+			System.out.println("Contacts in the city of " + cityName + ":");
+			for (Contact contact : results) {
+				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName());
+			}
 		}
 		return results;
 	}
 
-	public ArrayList<Contact> searchByState(String stateName) {
+	public ArrayList<Contact> viewContactsByState(String stateName) {
 		ArrayList<Contact> results = new ArrayList<>();
 		for (int i = 0; i < contacts.size(); i++) {
 			Contact contact = contacts.get(i);
@@ -77,6 +100,11 @@ public class AddressBook {
 		}
 		if (results.isEmpty()) {
 			System.out.println("No contacts found in the given state.");
+		} else {
+			System.out.println("Contacts in the state of " + stateName + ":");
+			for (Contact contact : results) {
+				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName());
+			}
 		}
 		return results;
 	}

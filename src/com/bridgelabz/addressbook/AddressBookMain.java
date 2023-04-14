@@ -14,8 +14,8 @@ public class AddressBookMain {
 			System.out.println("2. Edit Contact");
 			System.out.println("3. Display All Contacts");
 			System.out.println("4. Delete Contacts");
-			System.out.println("5. Search by City");
-			System.out.println("6. Search by State");
+			System.out.println("5. view City");
+			System.out.println("6. view State");
 			System.out.println("7. Exit");
 			System.out.print("Enter option: ");
 			int option = sc.nextInt();
@@ -36,12 +36,12 @@ public class AddressBookMain {
 			case 5:
 				System.out.print("Enter city name: ");
 				String city = sc.next();
-				addressBook.searchByCity(city);
+				addressBook.viewContactsByCity(city);
 				break;
 			case 6:
 				System.out.print("Enter state name: ");
 				String state = sc.next();
-				addressBook.searchByState(state);
+				addressBook.viewContactsByState(state);
 				break;
 			case 7:
 				System.out.println("Exiting...");
