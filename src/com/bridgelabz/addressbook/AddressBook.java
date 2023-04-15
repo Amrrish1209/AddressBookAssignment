@@ -85,9 +85,13 @@ public class AddressBook {
 			System.out.println("No contacts found in the given city.");
 		} else {
 			System.out.println("Contacts in the city of " + cityName + ":");
+			results.sort(new Comparator<Contact>() {
+				public int compare(Contact c1, Contact c2) {
+					return c1.getCity().compareToIgnoreCase(c2.getCity());
+				}
+			});
 			for (Contact contact : results) {
-				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName()
-						+ " " + "Mobile Number: " + contact.getPhoneNumber());
+				System.out.println(contact);
 			}
 		}
 		return results;
@@ -105,9 +109,37 @@ public class AddressBook {
 			System.out.println("No contacts found in the given state.");
 		} else {
 			System.out.println("Contacts in the state of " + stateName + ":");
+			results.sort(new Comparator<Contact>() {
+				public int compare(Contact c1, Contact c2) {
+					return c1.getState().compareToIgnoreCase(c2.getState());
+				}
+			});
 			for (Contact contact : results) {
-				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName()
-						+ " " + "Mobile Number: " + contact.getPhoneNumber());
+				System.out.println(contact);
+			}
+		}
+		return results;
+	}
+
+	public ArrayList<Contact> viewContactsByZip(String zipCode) {
+		ArrayList<Contact> results = new ArrayList<>();
+		for (int i = 0; i < contacts.size(); i++) {
+			Contact contact = contacts.get(i);
+			if (contact.getZip().equalsIgnoreCase(zipCode)) {
+				results.add(contact);
+			}
+		}
+		if (results.isEmpty()) {
+			System.out.println("No contacts found in the given zip code.");
+		} else {
+			System.out.println("Contacts in the state of " + zipCode + ":");
+			results.sort(new Comparator<Contact>() {
+				public int compare(Contact c1, Contact c2) {
+					return c1.getZip().compareToIgnoreCase(c2.getZip());
+				}
+			});
+			for (Contact contact : results) {
+				System.out.println(contact);
 			}
 		}
 		return results;

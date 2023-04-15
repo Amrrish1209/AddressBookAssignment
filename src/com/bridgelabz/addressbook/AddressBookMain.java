@@ -16,7 +16,8 @@ public class AddressBookMain {
 			System.out.println("4. Delete Contacts");
 			System.out.println("5. view City");
 			System.out.println("6. view State");
-			System.out.println("7. Exit");
+			System.out.println("7. view zip");
+			System.out.println("8. Exit");
 			System.out.print("Enter option: ");
 			int option = sc.nextInt();
 
@@ -44,6 +45,11 @@ public class AddressBookMain {
 				addressBook.viewContactsByState(state);
 				break;
 			case 7:
+				System.out.println("Enter the zip Code: ");
+				String zip = sc.next();
+				addressBook.viewContactsByZip(zip);
+				break;
+			case 8:
 				System.out.println("Exiting...");
 				System.exit(0);
 				break;
@@ -51,6 +57,7 @@ public class AddressBookMain {
 				System.out.println("Invalid option!");
 				break;
 			}
+			sc.close();
 		}
 	}
 }
