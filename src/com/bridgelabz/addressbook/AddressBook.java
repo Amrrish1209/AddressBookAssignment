@@ -1,6 +1,8 @@
 package com.bridgelabz.addressbook;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class AddressBook {
@@ -84,7 +86,8 @@ public class AddressBook {
 		} else {
 			System.out.println("Contacts in the city of " + cityName + ":");
 			for (Contact contact : results) {
-				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName()+" "+ "Mobile Number: "+contact.getPhoneNumber());
+				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName()
+						+ " " + "Mobile Number: " + contact.getPhoneNumber());
 			}
 		}
 		return results;
@@ -103,24 +106,24 @@ public class AddressBook {
 		} else {
 			System.out.println("Contacts in the state of " + stateName + ":");
 			for (Contact contact : results) {
-				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName()+" "+"Mobile Number: "+contact.getPhoneNumber());
+				System.out.println("First Name: " + contact.getFirstName() + " " + "Last Name: " + contact.getLastName()
+						+ " " + "Mobile Number: " + contact.getPhoneNumber());
 			}
 		}
 		return results;
 	}
 
 	public void displayContact() {
+		Collections.sort(contacts, new Comparator<Contact>() {
+			public int compare(Contact c1, Contact c2) {
+				return c1.getFirstName().compareToIgnoreCase(c2.getFirstName());
+			}
+		});
+
 		System.out.println("All Contacts");
 		for (int i = 0; i < contacts.size(); i++) {
 			System.out.println("Contact #" + (i + 1));
-			System.out.println("First Name: " + contacts.get(i).getFirstName());
-			System.out.println("Last Name: " + contacts.get(i).getLastName());
-			System.out.println("Address: " + contacts.get(i).getAddress());
-			System.out.println("City: " + contacts.get(i).getCity());
-			System.out.println("State: " + contacts.get(i).getState());
-			System.out.println("Zip: " + contacts.get(i).getZip());
-			System.out.println("PhoneNumber: " + contacts.get(i).getPhoneNumber());
-			System.out.println("EmailId: " + contacts.get(i).getEmail());
+			System.out.println(contacts.get(i).toString());
 		}
 	}
 
