@@ -1,5 +1,9 @@
 package com.bridgelabz.addressbook;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -54,24 +58,6 @@ public class AddressBook {
 		}
 		return false;
 	}
-
-	/*
-	 * public ArrayList<Contact> searchByCity(String cityName) { ArrayList<Contact>
-	 * results = new ArrayList<>(); for (int i = 0; i < contacts.size(); i++) {
-	 * Contact contact = contacts.get(i); if
-	 * (contact.getCity().equalsIgnoreCase(cityName)) { results.add(contact); } } if
-	 * (results.isEmpty()) {
-	 * System.out.println("No contacts found in the given city."); } return results;
-	 * }
-	 * 
-	 * public ArrayList<Contact> searchByState(String stateName) {
-	 * ArrayList<Contact> results = new ArrayList<>(); for (int i = 0; i <
-	 * contacts.size(); i++) { Contact contact = contacts.get(i); if
-	 * (contact.getState().equalsIgnoreCase(stateName)) { results.add(contact); } }
-	 * if (results.isEmpty()) {
-	 * System.out.println("No contacts found in the given state."); } return
-	 * results; }
-	 */
 
 	public ArrayList<Contact> viewContactsByCity(String cityName) {
 		ArrayList<Contact> results = new ArrayList<>();
@@ -211,4 +197,43 @@ public class AddressBook {
 		}
 	}
 
+	public void writeToFile(String fileName) {
+		try {
+			FileWriter writer = new FileWriter(fileName);
+			for (Contact contact : contacts) {
+				writer.write(contact.getFirstName() + "," + contact.getLastName() + "," + contact.getAddress() + ","
+						+ contact.getCity() + "," + contact.getState() + "," + contact.getZip() + ","
+						+ contact.getPhoneNumber() + "," + contact.getEmail() + "\n");
+			}
+			writer.close();
+			System.out.println("Contacts written to file " + fileName + " successfully!");
+		} catch (IOException e) {
+			System.out.println("An error occurred while writing to file " + fileName);
+			e.printStackTrace();
+		}
+	}
+
+	public void readFromFile(String fileName) {
+		try {
+			File file = new File(fileName);
+			Scanner scanner = new Scanner(file);
+			while (scanner.hasNextLine()) {
+				String[] contactData = scanner.nextLine().split(",");
+				Contact contact = new Contact();
+				contact.setFirstName(contactData[0]);
+				contact.setLastName(contactData[1]);
+				contact.setAddress(contactData[2]);
+				contact.setCity(contactData[3]);
+				contact.setState(contactData[4]);
+				contact.setZip(contactData[5]);
+				contact.setPhoneNumber(contactData[6]);
+				contact.setEmail(contactData[7]);
+				contacts.add(contact);
+			}
+			scanner.close();
+			System.out.println("Contacts read from file " + fileName + " successfully!");
+		} catch (FileNotFoundException e) {
+			System.out.println("File " + fileName + " not found!");
+		}
+	}
 }

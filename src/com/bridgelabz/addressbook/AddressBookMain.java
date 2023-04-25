@@ -8,6 +8,9 @@ public class AddressBookMain {
 		AddressBook addressBook = new AddressBook();
 		Scanner sc = new Scanner(System.in);
 
+		// Read contacts from file
+		addressBook.readFromFile("contacts.csv");
+
 		while (true) {
 			System.out.println("\nAddress Book Options:");
 			System.out.println("1. Add Contact");
@@ -50,6 +53,7 @@ public class AddressBookMain {
 				addressBook.viewContactsByZip(zip);
 				break;
 			case 8:
+				addressBook.writeToFile("contacts.csv");
 				System.out.println("Exiting...");
 				System.exit(0);
 				break;
@@ -57,7 +61,6 @@ public class AddressBookMain {
 				System.out.println("Invalid option!");
 				break;
 			}
-			sc.close();
 		}
 	}
 }
