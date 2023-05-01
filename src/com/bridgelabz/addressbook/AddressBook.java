@@ -1,11 +1,17 @@
 package com.bridgelabz.addressbook;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
@@ -14,7 +20,7 @@ public class AddressBook {
 	private ArrayList<Contact> contacts = new ArrayList<>();
 	Scanner sc = new Scanner(System.in);
 
-	public void addContact() {
+	public void addContact(Contact newContact) {
 		boolean addMoreContacts = true;
 		while (addMoreContacts) {
 			Contact contact = new Contact(); // create new Contact object
@@ -97,7 +103,7 @@ public class AddressBook {
 			System.out.println("Contacts in the state of " + stateName + ":");
 			results.sort(new Comparator<Contact>() {
 				public int compare(Contact c1, Contact c2) {
-					return c1.getState().compareToIgnoreCase(c2.getState());
+					return c1.getCity().compareToIgnoreCase(c2.getCity());
 				}
 			});
 			for (Contact contact : results) {
@@ -107,133 +113,79 @@ public class AddressBook {
 		return results;
 	}
 
-	public ArrayList<Contact> viewContactsByZip(String zipCode) {
-		ArrayList<Contact> results = new ArrayList<>();
-		for (int i = 0; i < contacts.size(); i++) {
-			Contact contact = contacts.get(i);
-			if (contact.getZip().equalsIgnoreCase(zipCode)) {
-				results.add(contact);
-			}
-		}
-		if (results.isEmpty()) {
-			System.out.println("No contacts found in the given zip code.");
-		} else {
-			System.out.println("Contacts in the state of " + zipCode + ":");
-			results.sort(new Comparator<Contact>() {
-				public int compare(Contact c1, Contact c2) {
-					return c1.getZip().compareToIgnoreCase(c2.getZip());
-				}
-			});
-			for (Contact contact : results) {
-				System.out.println(contact);
-			}
-		}
-		return results;
-	}
-
-	public void displayContact() {
-		Collections.sort(contacts, new Comparator<Contact>() {
-			public int compare(Contact c1, Contact c2) {
-				return c1.getFirstName().compareToIgnoreCase(c2.getFirstName());
-			}
-		});
-
-		System.out.println("All Contacts");
-		for (int i = 0; i < contacts.size(); i++) {
-			System.out.println("Contact #" + (i + 1));
-			System.out.println(contacts.get(i).toString());
-		}
-	}
-
-	public void editContact() {
-		System.out.println("Enter the first name of the contact you want to edit:");
-		String firstName = sc.nextLine();
-		System.out.println("Enter the last name of the contact you want to edit:");
-		String lastName = sc.nextLine();
-		boolean found = false;
-		for (int i = 0; i < contacts.size(); i++) {
-			Contact contact = contacts.get(i);
+	public void updateContact(String firstName, String lastName) {
+		for (Contact contact : contacts) {
 			if (contact.getFirstName().equals(firstName) && contact.getLastName().equals(lastName)) {
-				found = true;
-				System.out.println("Enter the new Address:");
+				System.out.println("Enter the Address");
 				contact.setAddress(sc.nextLine());
-				System.out.println("Enter the new City:");
+				System.out.println("Enter the CityName");
 				contact.setCity(sc.nextLine());
-				System.out.println("Enter the new State:");
+				System.out.println("Enter the StateName");
 				contact.setState(sc.nextLine());
-				System.out.println("Enter the new Zip:");
+				System.out.println("Enter the Zip");
 				contact.setZip(sc.nextLine());
-				System.out.println("Enter the new PhoneNumber:");
+				System.out.println("Enter the PhoneNumber");
 				contact.setPhoneNumber(sc.nextLine());
-				System.out.println("Enter the new EmailId:");
+				System.out.println("Enter the EmailId");
 				contact.setEmail(sc.nextLine());
-				System.out.println("Contact updated successfully!");
-				break;
+
+				System.out.println("Contact updated successfully.");
+				return;
 			}
 		}
-
-		if (!found) {
-			System.out.println("No contact found with the given name!");
-		}
+		System.out.println("No contact found with the given name.");
 	}
 
-	public void deleteContact() {
-		System.out.println("Enter the first name of the contact you want to delete:");
-		String firstName = sc.nextLine();
-		System.out.println("Enter the last name of the contact you want to delete:");
-		String lastName = sc.nextLine();
-		boolean found = false;
+	public void deleteContact(String firstName, String lastName) {
 		for (int i = 0; i < contacts.size(); i++) {
 			Contact contact = contacts.get(i);
 			if (contact.getFirstName().equals(firstName) && contact.getLastName().equals(lastName)) {
-				found = true;
 				contacts.remove(i);
-				System.out.println("Contact deleted successfully!");
-				break;
+				System.out.println("Contact deleted successfully.");
+				return;
 			}
 		}
-		if (!found) {
-			System.out.println("No contact found with the given name!");
+		System.out.println("No contact found with the given name.");
+	}
+
+	public void viewAllContacts() {
+		if (contacts.isEmpty()) {
+			System.out.println("No contacts found!");
+			return;
+		}
+		System.out.println("All Contacts:");
+		for (Contact contact : contacts) {
+			System.out.println(contact);
 		}
 	}
 
-	public void writeToFile(String fileName) {
-		try {
-			FileWriter writer = new FileWriter(fileName);
-			for (Contact contact : contacts) {
-				writer.write(contact.getFirstName() + "," + contact.getLastName() + "," + contact.getAddress() + ","
-						+ contact.getCity() + "," + contact.getState() + "," + contact.getZip() + ","
-						+ contact.getPhoneNumber() + "," + contact.getEmail() + "\n");
-			}
-			writer.close();
-			System.out.println("Contacts written to file " + fileName + " successfully!");
-		} catch (IOException e) {
-			System.out.println("An error occurred while writing to file " + fileName);
-			e.printStackTrace();
+	public void writeContactsToCSV(File file) throws IOException {
+		FileWriter outputfile = new FileWriter(file);
+		CSVWriter writer = new CSVWriter(outputfile);
+
+		String[] header = { "First Name", "Last Name", "Address", "City", "State", "Zip", "Phone Number", "Email" };
+		writer.writeNext(header);
+
+		for (Contact contact : contacts) {
+			String[] data = { contact.getFirstName(), contact.getLastName(), contact.getAddress(), contact.getCity(),
+					contact.getState(), contact.getZip(), contact.getPhoneNumber(), contact.getEmail() };
+			writer.writeNext(data);
 		}
+
+		writer.close();
+		System.out.println("Contacts written to CSV file successfully.");
 	}
 
-	public void readFromFile(String fileName) {
-		try {
-			File file = new File(fileName);
-			Scanner scanner = new Scanner(file);
-			while (scanner.hasNextLine()) {
-				String[] contactData = scanner.nextLine().split(",");
-				Contact contact = new Contact();
-				contact.setFirstName(contactData[0]);
-				contact.setLastName(contactData[1]);
-				contact.setAddress(contactData[2]);
-				contact.setCity(contactData[3]);
-				contact.setState(contactData[4]);
-				contact.setZip(contactData[5]);
-				contact.setPhoneNumber(contactData[6]);
-				contact.setEmail(contactData[7]);
-				contacts.add(contact);
-			}
-			scanner.close();
-			System.out.println("Contacts read from file " + fileName + " successfully!");
-		} catch (FileNotFoundException e) {
-			System.out.println("File " + fileName + " not found!");
+	public void readContactsFromCSV(File file) throws FileNotFoundException {
+		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
+		CsvToBean<Contact> csvToBean = new CsvToBeanBuilder<Contact>(reader).withType(Contact.class).build();
+
+		contacts.clear();
+		for (Contact contact : csvToBean) {
+			contacts.add(contact);
 		}
+
+		System.out.println("Contacts read from CSV file successfully.");
 	}
+
 }
